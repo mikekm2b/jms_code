@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args":["MeasData_SWR_2m_0428_2020.csv","Simulation_SWR_2m.csv","--ylo","1","--yhi","2"],
+            "args":["SWR_4NEC2_Sim_140_150MHz_19_30_in.csv","SWR_4NEC2_Sim_440_450MHz_19_30_in.csv","--ylo","1","--yhi","2.6"],
         }
     ]
 }
