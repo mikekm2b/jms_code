@@ -38,7 +38,7 @@ def plot_data(data_csv1,data_csv2):
     # Read file into a csv.reader object
     lines1 = csv2list(data_csv1)
     lines2 = csv2list(data_csv2)
-
+    
     data1 = create_float_array(lines1,nRow1)
     data2 = create_float_array(lines2,nRow2)
 
@@ -48,25 +48,34 @@ def plot_data(data_csv1,data_csv2):
  #   fig_size[1] = 5
  #   plt.rcParams['figure.figsize'] = fig_size
     # Set inside of graph facecolor (1,1,1) = white
-    rfc = 0.95
-    gfc = 0.95
-    bfc = 0.95
+    rfc = 1.0
+    gfc = 1.0
+    bfc = 1.0
     plt.rcParams['axes.facecolor'] = (rfc, gfc, bfc)
     #plt.rcParams['axes.alpha'] = 0.1
 
-    plt.gcf().subplots_adjust(bottom=0.15) # Avoid xlabel text cutoff
+    # Set save figure directory
+    plt.rcParams["savefig.directory"] = "D:\\plot2datafiles_xy"
 
+    plt.gcf().subplots_adjust(bottom=0.15) # Avoid xlabel text cutoff
     # Generate plot basics
-    data_color=(0.5, 0.1, 0.1)
-    sim_color=(0.1,0.4,0.1) 	
+    data1_color=(0.5, 0.1, 0.1)
+    data2_color=(0.1,0.4,0.1) 	
     fig1=plt.figure(1)
-    plt.plot(data1[:,0],data1[:,1],linewidth=1.5, marker="o",fillstyle='none', markersize=4,c=data_color)
-    plt.plot(data2[:,0],data2[:,1],linewidth=1.5, marker="o",fillstyle='none',markersize=4,c=sim_color)
+    plt.plot(data1[:,0],data1[:,1],linewidth=1.5, marker="o",fillstyle='none', markersize=4,c=data1_color)
+    plt.plot(data2[:,0],data2[:,1],linewidth=1.5, marker="o",fillstyle='none',markersize=4,c=data2_color)
     plt.ylabel('SWR')
-    plt.xlabel('Frequency')
+    plt.xlabel('Frequency, MHz')
     plt.suptitle('SWR from Bird Wattmeter Fwd/Rev Power')
-    plt.text(140.1,1.07,'Measured Antenna SWR', c=data_color)
-    plt.text(141,1.5,'4NEC2 Simulation SWR', c=sim_color)
+    # Determine location of legend text
+    xlo = data1[0,0]
+    xhi = data1[nRow1-3,0]
+    x1 = xlo + 1.0
+    x2 = xlo + 1.0
+    y1 = args.yhi-0.1
+    y2 = args.yhi-0.2
+    plt.text(x1,y1,args.filename1, c=data1_color)
+    plt.text(x2,y2,args.filename2, c=data2_color)
     
    # Set Outside of Figure background color, (1,1,1)=white
     rbk = 0.93
@@ -74,15 +83,13 @@ def plot_data(data_csv1,data_csv2):
     bbk = 0.93
     fig1.patch.set_facecolor((rbk, gbk, bbk))
 
-    xlo = data1[0,0]
-    xhi = data1[nRow1-3,0]
     if args.ylo and args.yhi:
         plt.xlim(xlo,xhi)
         plt.ylim(args.ylo,args.yhi)
 
     #Set size and location of graph on screen
     wm = plt.get_current_fig_manager()
-    wm.window.wm_geometry("800x400+500-400")
+    wm.window.wm_geometry("700x400+500-400")
 
         
     plt.show()
